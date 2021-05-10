@@ -1,0 +1,76 @@
+{% extends "student/base.html" %}
+
+{% block content %}
+    <div class="container">
+	    <div class="row clearfix">
+            <div class="col-md-12 column">
+                <div class="jumbotron">
+                    <h1>
+                        Course Enrollment
+                    </h1>
+                </div>
+            </div>
+	    </div><br/><br/><br/>
+		<div class="row clearfix">
+			<div class="col-md-6 column">
+				<h4 class="text-center">
+					Student
+				</h4>
+			</div>
+			<div class="col-md-6 column">
+				<select id="studentname">
+					<option selected="">Choose student</option>
+					{% for row in student %}
+					<option value="{{ row.id }}{{ row.firstname }}">{{ row.id }} {{ row.firstname }}</option>
+					{% endfor %}
+				</select>
+			</div><br/><br/><br/>
+			<div class="col-md-6 column">
+				<div class="text-left">
+					<h4 class="text-center">
+					Course
+					</h4>
+				</div>
+			</div>
+			<div class="col-md-6 column">
+				<div class="btn-group text-right">
+					<select id="coursename">
+						<option selected="">Choose course</option>
+						{% for row in course %}
+						<option value="{{ row.title }}">{{ row.title }}</option>
+						{% endfor %}
+					</select>
+				</div>
+			</div><br/><br/><br/>
+			<div class="col-md-12 column">
+				<div class="text-right">
+					<button type="button" class="btn btn-default btn-primary" id="enrollment">Enroll</button>
+				</div>
+			</div>
+		</div>
+    </div>
+
+<script>
+
+	$(document).ready(function (){
+
+		$('#enrollment').click(function (){
+
+			$.ajax({
+
+				url: "{% url 'saveenrollment' %}",
+				data: {
+					stuname: $('#studentname').val(),
+					cname: $('#coursename').val(),
+				},
+				success: function(){
+					console.log('success');
+				}
+			});
+
+		});
+
+	});
+</script>
+
+{% endblock %}
